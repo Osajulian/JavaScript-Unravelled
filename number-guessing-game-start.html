@@ -54,6 +54,8 @@
       let guessCount = 1;
       let resetButton;
 
+      guessField.focus();
+
       function checkGuess() {
         let userGuess = Number(guessField.value);
         if (guessCount === 1) {
@@ -82,10 +84,59 @@
         guessCount++;
         guessField.value = '';
         guessField.focus();
-
-        guessSubmit.addEventListener('click', checkGuess);
+        
       }
+
+      guessSubmit.addEventListener('click', checkGuess);
       
+      function setGameOver() {
+        guessField.disabled = true;
+        guessSubmit.disabled = true;
+        resetButton = document.createElement('button');
+        resetButton.textContent = 'Start new game';
+        document.body.appendChild(resetButton);
+        resetButton.addEventListener('click', resetGame);
+
+        /* 
+
+        The first two lines disable the form text input and button by setting their disabled properties to true. This is necessary, because if we didn't, the user could submit more guesses after the game is over, which would mess things up.
+        The next three lines generate a new <button> element, set its text label to "Start new game", and add it to the bottom of our existing HTML.
+        The final line sets an event listener on our new button so that when it is clicked, a function called resetGame() is run.
+
+        */
+      }
+
+      function resetGame() {
+        guessCount = 1;
+      
+        const resetParas = document.querySelectorAll('.resultParas p');
+        for (let i = 0 ; i < resetParas.length ; i++) {
+          resetParas[i].textContent = '';
+        }
+      
+        resetButton.parentNode.removeChild(resetButton);
+      
+        guessField.disabled = false;
+        guessSubmit.disabled = false;
+        guessField.value = '';
+        guessField.focus();
+      
+        lastResult.style.backgroundColor = 'white';
+      
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+
+        /* 
+    This rather long block of code completely resets everything to how it was at the start of the game, so the player can have another go. It:
+
+    Puts the guessCount back down to 1.
+    Empties all the text out of the information paragraphs.
+    Removes the reset button from our code.
+    Enables the form elements, and empties and focuses the text field, ready for a new guess to be entered.
+    Removes the background color from the lastResult paragraph.
+    Generates a new random number so that you are not just guessing the same number again!
+
+        */
+      }
       
     </script>
 
