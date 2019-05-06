@@ -1,6 +1,6 @@
 javascript unravelled demos using mdn javascript examples
 
-This demo project is dedicated to Solomon Grundy whose 7 days lifespan went through multiple iterations for this project.
+This demo project is dedicated to Solomon Grundy whose 7 days, 1-day for 1 life event lifespan went through multiple iterations for this project.
 
 >**"Solomon Grundy, born on a Monday,
 >Christened on Tuesday, 
