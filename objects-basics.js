@@ -49,7 +49,7 @@ let name = obj['name'];
 Dot notation and bracket notation are semantically equivalent. The latter has the advantage that the name
 of the property is provided as a string, which means it can be calculated at run-time. However, using this
 method prevents some JavaScript engine and minifier optimizations being applied. It can also be used to set
-and get prperties with names that are reserved words **( See info for changes to this starting in ECMAScript5)**.
+and get prperties with names that are reserved words **( See notes for changes to this starting in ECMAScript5)**.
 */
 
 obj.for = 'Simon'; // Syntax error, because 'for' is a reserved word
