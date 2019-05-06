@@ -23,7 +23,7 @@ personFullNameReversed(s); // "Grundy, Solomon"
 // The above works but it's pretty ugly. You end up with dozens of functions in your global namespace.
 // What we really need is a way to attach a function to an object. Since functions are objects, this iseasy:
 
-function makePersonV1(first, last) {
+function makePerson(first, last) {
     return {
         first: first,
         last: last,
@@ -37,7 +37,7 @@ function makePersonV1(first, last) {
     };
 }
 
-let s1 = makePersonUpdated('Solomon', 'Grundy');
+let s1 = makePerson('Solomon', 'Grundy');
 s1.fullName(); // "Solomon Grundy"
 s1.fullNameReversed(); // "Grundy, Solomon"
 
@@ -57,4 +57,44 @@ function Person(first, last) {
 
     }
 
-    let s2 = new Person('Solomon')
+    let s2 = new Person('Solomon', 'Wilson');
+/* The improved function still has the same pitfall with
+ calling fullname() alone.
+*/
+
+/* Our person objects are getting better, but there are still some ugly edges to them. Every time
+we create a person object, we are creating two brand new function objects within it - wouldn't it
+be better if this code was shared?
+*/
+
+function personFullName() {
+    return this.first + ' ' + this.last;
+}
+
+function personFullName() {
+    return this.last + ', ' + this.first;
+}
+
+function person(first, last) {
+    this.first = first;
+    this.last = last;
+    this.fullName = personFullName;
+    this.personFullNameReversed = personFullNameReversed;
+}
+
+/* That's better; we are creating the method functions only once, and assigning references to them inside
+the constructor. Can we do better than that? The answer is yes:
+*/
+
+function Person(first, last) {
+    this.first = first;
+    this.last =last;
+}
+Person.prototype.fullName = function() {
+    return this.first + ' ' + this.last;
+}
+Person.prototype.fullNameReserved = function() {
+    return this.last + ', ' + this.first;
+}
+
+// see notes on prototype
